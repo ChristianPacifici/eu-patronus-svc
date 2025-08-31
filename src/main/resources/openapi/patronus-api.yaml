@@ -1,0 +1,382 @@
+openapi: 3.0.3
+info:
+  title: Patronus Social Network API
+  description: API for the Patronus social network platform
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Local server
+paths:
+  /api/users:
+    get:
+      operationId: getUsers
+      summary: Get all users
+      tags:
+        - patronus
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserResponse'
+    post:
+      operationId: createUsers
+      summary: Create a new user
+      tags:
+        - patronus
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+  /api/users/{id}:
+    get:
+      operationId: getUsersById
+      summary: Get user by ID
+      tags:
+        - patronus
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+    put:
+      operationId: updateUserById
+      summary: Update user by ID
+      tags:
+        - patronus
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+    delete:
+      operationId: deleteUserbyId
+      summary: Delete user by ID
+      tags:
+        - patronus
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No Content
+  /api/posts:
+    get:
+      operationId: getPosts
+      summary: Get all posts
+      tags:
+        - patronus
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PostResponse'
+    post:
+      operationId: CreatePost
+      summary: Create a new post
+      tags:
+        - patronus
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostResponse'
+  /api/posts/{id}:
+    get:
+      operationId: getPostById
+      summary: Get post by ID
+      tags:
+        - patronus
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostResponse'
+    put:
+      operationId: updatePostById
+      summary: Update post by ID
+      tags:
+        - patronus
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostResponse'
+    delete:
+      operationId: deletePostById
+      summary: Delete post by ID
+      tags:
+        - patronus
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No Content
+  /api/comments:
+    post:
+      operationId: createComment
+      summary: Create a new comment
+      tags:
+        - patronus
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentResponse'
+  /api/friendships:
+    post:
+      operationId: postFriendRequest
+      summary: Send a friend request
+      tags:
+        - patronus
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FriendshipRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FriendshipResponse'
+    put:
+      summary: Update friendship status
+      operationId: updateFriendship
+      tags:
+        - patronus
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FriendshipUpdateRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FriendshipResponse'
+components:
+  schemas:
+    UserRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+    UserResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        username:
+          type: string
+        email:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    PostRequest:
+      type: object
+      properties:
+        userId:
+          type: integer
+          format: int64
+        content:
+          type: string
+    PostResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        userId:
+          type: integer
+          format: int64
+        content:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    CommentRequest:
+      type: object
+      properties:
+        userId:
+          type: integer
+          format: int64
+        postId:
+          type: integer
+          format: int64
+        content:
+          type: string
+    CommentResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        userId:
+          type: integer
+          format: int64
+        postId:
+          type: integer
+          format: int64
+        content:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    FriendshipRequest:
+      type: object
+      properties:
+        userId:
+          type: integer
+          format: int64
+        friendId:
+          type: integer
+          format: int64
+    FriendshipUpdateRequest:
+      type: object
+      properties:
+        userId:
+          type: integer
+          format: int64
+        friendId:
+          type: integer
+          format: int64
+        status:
+          type: string
+    FriendshipResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        userId:
+          type: integer
+          format: int64
+        friendId:
+          type: integer
+          format: int64
+        status:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
