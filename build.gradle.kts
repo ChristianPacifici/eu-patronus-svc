@@ -100,7 +100,6 @@ jooq {
 
 val configValues = mapOf(
     "interfaceOnly" to "true",
-    "interfaceOnly" to "true",
     "dateLibrary" to "java8",
     "gradleBuildFile" to "false",
     "exceptionHandler" to "false",
