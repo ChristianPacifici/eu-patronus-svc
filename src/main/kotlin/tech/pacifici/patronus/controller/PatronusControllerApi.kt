@@ -14,7 +14,6 @@ import tech.pacifici.patronus.model.UserRequest
 import tech.pacifici.patronus.model.UserResponse
 
 class PatronusControllerApi : PatronusApi {
-
     override fun createComment(commentRequest: CommentRequest): ResponseEntity<CommentResponse> {
         // TODO: Implement your business logic here
         return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
@@ -70,14 +69,19 @@ class PatronusControllerApi : PatronusApi {
         return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
     }
 
-    override fun updatePostById(id: Long, postRequest: PostRequest): ResponseEntity<PostResponse> {
+    override fun updatePostById(
+        id: Long,
+        postRequest: PostRequest,
+    ): ResponseEntity<PostResponse> {
         // TODO: Implement your business logic here
         return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
     }
 
-    override fun updateUserById(id: Long, userRequest: UserRequest): ResponseEntity<UserResponse> {
+    override fun updateUserById(
+        id: Long,
+        userRequest: UserRequest,
+    ): ResponseEntity<UserResponse> {
         // TODO: Implement your business logic here
         return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
     }
-
 }

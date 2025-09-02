@@ -7,12 +7,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 import tech.pacifici.patronus.interceptor.MdcInterceptor
 
 @Configuration
-class WebConfig @Autowired constructor(
-    private val mdcInterceptor: MdcInterceptor
-) : WebMvcConfigurer {
-
-    override fun addInterceptors(registry: InterceptorRegistry) {
-        registry.addInterceptor(mdcInterceptor)
-            .addPathPatterns("/**") // Apply to all endpoints
+class WebConfig
+    @Autowired
+    constructor(
+        private val mdcInterceptor: MdcInterceptor,
+    ) : WebMvcConfigurer {
+        override fun addInterceptors(registry: InterceptorRegistry) {
+            registry
+                .addInterceptor(mdcInterceptor)
+                .addPathPatterns("/**") // Apply to all endpoints
+        }
     }
-}

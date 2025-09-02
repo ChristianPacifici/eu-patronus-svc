@@ -7,6 +7,7 @@ plugins {
     id("org.jooq.jooq-codegen-gradle") version "3.20.1"
     id("org.openapi.generator") version "7.13.0"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.9.23"
+    id("com.diffplug.spotless") version "7.2.1"
     kotlin("plugin.spring") version kotlinVersion
     kotlin("jvm") version kotlinVersion
 }
@@ -32,17 +33,16 @@ dependencies {
     implementation("org.liquibase:liquibase-core")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
-
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
     implementation("com.google.code.gson:gson:2.11.0")
     implementation("io.gsonfire:gson-fire:1.8.5")
 
-    api("org.jooq:jooq:${jooqVersion}")
+    api("org.jooq:jooq:$jooqVersion")
 
     jooqCodegen("jakarta.xml.bind:jakarta.xml.bind-api:4.0.1")
-    jooqCodegen("org.jooq:jooq-meta:${jooqVersion}")
-    jooqCodegen("org.jooq:jooq-meta-extensions:${jooqVersion}")
+    jooqCodegen("org.jooq:jooq-meta:$jooqVersion")
+    jooqCodegen("org.jooq:jooq-meta-extensions:$jooqVersion")
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -54,6 +54,18 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.3.1")
+}
+
+spotless {
+    kotlin {
+        target("**/*.kt")
+        targetExclude("**/build/**/*.kt")
+        ktlint()
+    }
+    kotlinGradle {
+        target("*.gradle.kts")
+        ktlint()
+    }
 }
 
 tasks.withType<Test> {
@@ -98,20 +110,20 @@ jooq {
     }
 }
 
-val configValues = mapOf(
-    "interfaceOnly" to "true",
-    "dateLibrary" to "java8",
-    "gradleBuildFile" to "false",
-    "exceptionHandler" to "false",
-    "useJakartaEe" to "true",
-    "useSpringBoot3" to "true",
-    "useTags" to "true"
+val configValues =
+    mapOf(
+        "interfaceOnly" to "true",
+        "dateLibrary" to "java8",
+        "gradleBuildFile" to "false",
+        "exceptionHandler" to "false",
+        "useJakartaEe" to "true",
+        "useSpringBoot3" to "true",
+        "useTags" to "true",
     )
-
 
 openApiGenerate {
     generatorName.set("kotlin-spring")
-    inputSpec.set("${projectDir}/src/main/resources/openapi/patronus-api.yaml")
+    inputSpec.set("$projectDir/src/main/resources/openapi/patronus-api.yaml")
     outputDir.set("${layout.buildDirectory.get()}/generated-sources/openapi")
     apiPackage.set("tech.pacifici.patronus.api")
     modelPackage.set("tech.pacifici.patronus.model")

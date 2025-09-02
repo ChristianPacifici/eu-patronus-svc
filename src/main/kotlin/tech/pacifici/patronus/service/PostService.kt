@@ -1,4 +1,3 @@
 package tech.pacifici.patronus.service
 
-class PostService {
-}
+class PostService
