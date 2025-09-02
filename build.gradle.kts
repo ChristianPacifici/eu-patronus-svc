@@ -49,6 +49,9 @@ dependencies {
     implementation("io.swagger.core.v3:swagger-core:2.2.15")
     implementation("io.swagger.core.v3:swagger-models:2.2.15")
 
+    implementation("io.github.microutils:kotlin-logging-jvm:3.0.5")
+    implementation("ch.qos.logback:logback-classic:1.4.14")
+
     runtimeOnly("org.postgresql:postgresql")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
