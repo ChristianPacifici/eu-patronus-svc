@@ -13,6 +13,19 @@ paths:
       summary: Get all users
       tags:
         - patronusUserManagement
+      parameters:
+        - name: x-request-id
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: x-correlation-id
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
       responses:
         '200':
           description: OK
@@ -27,6 +40,19 @@ paths:
       summary: Create a new user
       tags:
         - patronusUserManagement
+      parameters:
+        - name: x-request-id
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: x-correlation-id
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
       requestBody:
         required: true
         content:
@@ -53,6 +79,18 @@ paths:
           schema:
             type: string
             format: uuid
+        - name: x-request-id
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: x-correlation-id
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
       responses:
         '200':
           description: OK
@@ -68,6 +106,18 @@ paths:
       parameters:
         - name: id
           in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: x-request-id
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: x-correlation-id
+          in: header
           required: true
           schema:
             type: string
@@ -97,6 +147,18 @@ paths:
           schema:
             type: string
             format: uuid
+        - name: x-request-id
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: x-correlation-id
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
       responses:
         '204':
           description: No Content
@@ -106,6 +168,19 @@ paths:
       summary: Get all posts
       tags:
         - patronusPosts
+      parameters:
+        - name: x-request-id
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: x-correlation-id
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
       responses:
         '200':
           description: OK
@@ -120,6 +195,19 @@ paths:
       summary: Create a new post
       tags:
         - patronusPosts
+      parameters:
+        - name: x-request-id
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: x-correlation-id
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
       requestBody:
         required: true
         content:
@@ -146,6 +234,18 @@ paths:
           schema:
             type: string
             format: uuid
+        - name: x-request-id
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: x-correlation-id
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
       responses:
         '200':
           description: OK
@@ -161,6 +261,18 @@ paths:
       parameters:
         - name: id
           in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: x-request-id
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: x-correlation-id
+          in: header
           required: true
           schema:
             type: string
@@ -190,6 +302,18 @@ paths:
           schema:
             type: string
             format: uuid
+        - name: x-request-id
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: x-correlation-id
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
       responses:
         '204':
           description: No Content
@@ -202,6 +326,18 @@ paths:
       parameters:
         - name: id
           in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: x-request-id
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: x-correlation-id
+          in: header
           required: true
           schema:
             type: string
@@ -232,6 +368,18 @@ paths:
           schema:
             type: string
             format: uuid
+        - name: x-request-id
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: x-correlation-id
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
       requestBody:
         required: true
         content:
@@ -253,6 +401,18 @@ paths:
       parameters:
         - name: id
           in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: x-request-id
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: x-correlation-id
+          in: header
           required: true
           schema:
             type: string

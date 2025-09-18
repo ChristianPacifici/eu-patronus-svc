@@ -1,12 +1,8 @@
 package tech.pacifici.patronus.controller
 
 import UserService
-import io.swagger.v3.oas.annotations.Parameter
-import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import tech.pacifici.patronus.api.PatronusUserManagementApi
 import tech.pacifici.patronus.model.FriendshipRequest
@@ -15,88 +11,144 @@ import tech.pacifici.patronus.model.FriendshipUpdateRequest
 import tech.pacifici.patronus.model.UserRequest
 import tech.pacifici.patronus.model.UserResponse
 import toUserResponse
+import java.util.UUID
 
+/**
+ * Controller for managing user-related operations in the Patronus Social Network API.
+ * Implements the [PatronusUserManagementApi] interface to handle user creation,
+ * retrieval, updates, deletion, and friendship management.
+ */
 @RestController
 class PatronusUserControllerApi(
     private val userService: UserService,
 ) : PatronusUserManagementApi {
     /**
-     * Creates a new user.
+     * Creates a new user in the Patronus platform.
      *
-     * @param userRequest The request body containing the details of the user to create.
-     * @return A [ResponseEntity] containing the created [UserResponse] and HTTP status.
+     * @param xRequestId The unique identifier for the request.
+     * @param xCorrelationId The identifier for correlating requests across services.
+     * @param userRequest The request body containing user details (username, email, password, firstName, lastName).
+     * @return A [ResponseEntity] containing the created [UserResponse] with HTTP status 201 (Created).
+     * @throws RuntimeException If user creation fails due to invalid input or server issues.
      */
-    override fun createUsers(userRequest: UserRequest): ResponseEntity<UserResponse> {
+    override fun createUsers(
+        xRequestId: UUID,
+        xCorrelationId: UUID,
+        userRequest: UserRequest,
+    ): ResponseEntity<UserResponse> {
         val userResponse = userService.createUser(userRequest).toUserResponse()
-        return ResponseEntity(userResponse, HttpStatus.CREATED)
+        return ResponseEntity.status(HttpStatus.CREATED).body(userResponse)
     }
 
     /**
-     * Deletes a user by their ID.
+     * Deletes a user by their unique identifier.
      *
-     * @param id The ID of the user to delete.
-     * @return A [ResponseEntity] with HTTP status indicating the result of the operation.
+     * @param id The UUID of the user to delete.
+     * @param xRequestId The unique identifier for the request.
+     * @param xCorrelationId The identifier for correlating requests across services.
+     * @return A [ResponseEntity] with HTTP status 204 (No Content) on success.
+     * @throws RuntimeException If the user does not exist or deletion fails.
      */
-    override fun deleteUserbyId(id: java.util.UUID): ResponseEntity<Unit> {
+    override fun deleteUserbyId(
+        id: UUID,
+        xRequestId: UUID,
+        xCorrelationId: UUID,
+    ): ResponseEntity<Unit> {
         userService.deleteUser(id)
-        return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
+        return ResponseEntity.noContent().build()
     }
 
     /**
-     * Retrieves all users.
+     * Retrieves a list of all users in the Patronus platform.
      *
-     * @return A [ResponseEntity] containing a list of [UserResponse] and HTTP status.
+     * @param xRequestId The unique identifier for the request.
+     * @param xCorrelationId The identifier for correlating requests across services.
+     * @return A [ResponseEntity] containing a list of [UserResponse] with HTTP status 200 (OK).
+     * @throws RuntimeException If retrieval fails due to server issues.
      */
-    override fun getUsers(): ResponseEntity<List<UserResponse>> {
+    override fun getUsers(
+        xRequestId: UUID,
+        xCorrelationId: UUID,
+    ): ResponseEntity<List<UserResponse>> {
         // TODO: Implement your business logic here
-        return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
+        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build()
     }
 
     /**
-     * Retrieves a user by their ID.
+     * Retrieves a user by their unique identifier.
      *
-     * @param id The ID of the user to retrieve.
-     * @return A [ResponseEntity] containing the [UserResponse] and HTTP status.
+     * @param id The UUID of the user to retrieve.
+     * @param xRequestId The unique identifier for the request.
+     * @param xCorrelationId The identifier for correlating requests across services.
+     * @return A [ResponseEntity] containing the [UserResponse] with HTTP status 200 (OK).
+     * @throws RuntimeException If the user is not found or retrieval fails.
      */
-    override fun getUsersById(id: java.util.UUID): ResponseEntity<UserResponse> {
+    override fun getUsersById(
+        id: UUID,
+        xRequestId: UUID,
+        xCorrelationId: UUID,
+    ): ResponseEntity<UserResponse> {
         // TODO: Implement your business logic here
-        return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
+        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build()
     }
 
     /**
-     * Updates a user by their ID.
+     * Updates an existing user by their unique identifier.
      *
-     * @param id The ID of the user to update.
-     * @param userRequest The request body containing the updated details of the user.
-     * @return A [ResponseEntity] containing the updated [UserResponse] and HTTP status.
+     * @param id The UUID of the user to update.
+     * @param xRequestId The unique identifier for the request.
+     * @param xCorrelationId The identifier for correlating requests across services.
+     * @param userRequest The request body containing updated user details.
+     * @return A [ResponseEntity] containing the updated [UserResponse] with HTTP status 200 (OK).
+     * @throws RuntimeException If the user is not found or update fails.
      */
     override fun updateUserById(
-        id: java.util.UUID,
+        id: UUID,
+        xRequestId: UUID,
+        xCorrelationId: UUID,
         userRequest: UserRequest,
     ): ResponseEntity<UserResponse> {
         // TODO: Implement your business logic here
-        return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
+        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build()
     }
 
     /**
-     * Sends a friendship request.
+     * Sends a friend request from one user to another.
      *
-     * @param friendshipRequest The request body containing the details of the friendship request.
-     * @return A [ResponseEntity] containing the [FriendshipResponse] and HTTP status.
+     * @param id The UUID of the user sending the friend request.
+     * @param xRequestId The unique identifier for the request.
+     * @param xCorrelationId The identifier for correlating requests across services.
+     * @param friendshipRequest The request body containing the friend request details (userId, friendId).
+     * @return A [ResponseEntity] containing the [FriendshipResponse] with HTTP status 201 (Created).
+     * @throws RuntimeException If the friend request fails due to invalid input or server issues.
      */
-    override fun postFriendRequest(@Parameter(description = "", required = true) @PathVariable("id") id: java.util.UUID,@Parameter(description = "", required = true) @Valid @RequestBody friendshipRequest: FriendshipRequest): ResponseEntity<FriendshipResponse> {
-        //TODO: implement the logic here
-        return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
+    override fun postFriendRequest(
+        id: UUID,
+        xRequestId: UUID,
+        xCorrelationId: UUID,
+        friendshipRequest: FriendshipRequest,
+    ): ResponseEntity<FriendshipResponse> {
+        // TODO: implement the logic here
+        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build()
     }
 
     /**
-     * Updates the status of a friendship.
+     * Updates the status of an existing friendship (e.g., accept or reject).
      *
-     * @param friendshipUpdateRequest The request body containing the details of the friendship update.
-     * @return A [ResponseEntity] containing the updated [FriendshipResponse] and HTTP status.
+     * @param id The UUID of the user whose friendship status is being updated.
+     * @param xRequestId The unique identifier for the request.
+     * @param xCorrelationId The identifier for correlating requests across services.
+     * @param friendshipUpdateRequest The request body containing the updated friendship details (userId, friendId, status).
+     * @return A [ResponseEntity] containing the updated [FriendshipResponse] with HTTP status 200 (OK).
+     * @throws RuntimeException If the friendship is not found or update fails.
      */
-    override fun updateFriendship(friendshipUpdateRequest: FriendshipUpdateRequest): ResponseEntity<FriendshipResponse> {
-        // TODO: Implement your business logic here
-        return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
+    override fun updateFriendship(
+        id: UUID,
+        xRequestId: UUID,
+        xCorrelationId: UUID,
+        friendshipUpdateRequest: FriendshipUpdateRequest,
+    ): ResponseEntity<FriendshipResponse> {
+        // TODO: implement the logic here
+        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build()
     }
 }
