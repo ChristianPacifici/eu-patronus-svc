@@ -1,6 +1,5 @@
 package tech.pacifici.patronus.repository
 
-
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 import tech.pacifici.patronus.model.tables.Posts
@@ -9,19 +8,19 @@ import tech.pacifici.patronus.model.tables.records.PostsRecord
 import java.util.UUID
 
 @Repository
-class PostRepository(private val dsl: DSLContext) {
-
-    fun findAll(): List<PostsRecord> {
-        return dsl.selectFrom(POSTS)
+class PostRepository(
+    private val dsl: DSLContext,
+) {
+    fun findAll(): List<PostsRecord> =
+        dsl
+            .selectFrom(POSTS)
             .fetch()
-    }
 
-    fun findById(id: UUID): PostsRecord? {
-        return dsl.selectFrom(POSTS)
+    fun findById(id: UUID): PostsRecord? =
+        dsl
+            .selectFrom(POSTS)
             .where(POSTS.ID.eq(id))
             .fetchOne()
-
-    }
 
     fun save(Post: PostsRecord): PostsRecord =
         dsl
@@ -34,18 +33,18 @@ class PostRepository(private val dsl: DSLContext) {
             .returning()
             .fetchOne()!!
 
-
     fun update(post: PostsRecord): PostsRecord {
-        dsl.update(POSTS)
+        dsl
+            .update(POSTS)
             .set(POSTS.CONTENT, post.content)
             .where(POSTS.ID.eq(post.id))
             .execute()
         return post
     }
 
-    fun deleteById(id: UUID): Int {
-        return dsl.deleteFrom(POSTS)
+    fun deleteById(id: UUID): Int =
+        dsl
+            .deleteFrom(POSTS)
             .where(POSTS.ID.eq(id))
             .execute()
-    }
 }

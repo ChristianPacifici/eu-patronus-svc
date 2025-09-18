@@ -7,10 +7,12 @@ import tech.pacifici.patronus.model.tables.references.COMMENTS
 import java.util.UUID
 
 @Repository
-class CommentsRepository(private val dsl: DSLContext) {
-
+class CommentsRepository(
+    private val dsl: DSLContext,
+) {
     fun save(comment: CommentsRecord): CommentsRecord =
-        dsl.insertInto(COMMENTS)
+        dsl
+            .insertInto(COMMENTS)
             .set(COMMENTS.ID, UUID.randomUUID())
             .set(COMMENTS.POST_ID, comment.postId)
             .set(COMMENTS.USER_ID, comment.userId)

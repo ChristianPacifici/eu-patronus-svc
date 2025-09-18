@@ -5,10 +5,12 @@ import tech.pacifici.patronus.model.tables.records.FriendshipsRecord
 import tech.pacifici.patronus.model.tables.references.FRIENDSHIPS
 import java.util.UUID
 
-class FriendshipRepository(private val dsl: DSLContext) {
-
+class FriendshipRepository(
+    private val dsl: DSLContext,
+) {
     fun save(friendShip: FriendshipsRecord): FriendshipsRecord =
-        dsl.insertInto(FRIENDSHIPS)
+        dsl
+            .insertInto(FRIENDSHIPS)
             .set(FRIENDSHIPS.ID, UUID.randomUUID())
             .set(FRIENDSHIPS.USER_ID, friendShip.userId)
             .set(FRIENDSHIPS.FRIEND_ID, friendShip.friendId)
