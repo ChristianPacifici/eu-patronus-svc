@@ -143,6 +143,13 @@ The API is documented using **OpenAPI/Swagger**. After starting the application,
 
 ---
 
+>**Note**: 
+>All the IDs are UUID. Why a UUID as an ID Is Useful?
+>Distributed Systems: UUIDs are designed to be globally unique. This means you can generate a new user ID on a different server or even a client-side application without needing to first check the database for conflicts. This is crucial for applications that are scaled across multiple servers or for offline data synchronization.
+>Security: Using a UUID makes it much harder for someone to guess or "enumerate" other records in your database. With an auto-incrementing integer ID, an attacker might be able to guess the next user ID by simply incrementing a number (e.g., /users/1, /users/2, /users/3). A UUID, being a long, random string, completely eliminates this vulnerability.
+>Data Merging: If you ever need to merge data from two different databases, having a UUID for each record guarantees that there won't be any ID collisions. If you were using simple integer IDs, you would need to reassign IDs to avoid duplicates, which can be a complex and error-prone process.
+>Privacy: A UUID doesn't reveal any information about the number of records in your table or the order in which they were created. This can be a minor but useful privacy feature in some contexts.
+
 ## **Project Structure**
 ```
 .

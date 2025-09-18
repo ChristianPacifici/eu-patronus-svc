@@ -12,7 +12,7 @@ paths:
       operationId: getUsers
       summary: Get all users
       tags:
-        - patronus
+        - patronusUserManagement
       responses:
         '200':
           description: OK
@@ -26,7 +26,7 @@ paths:
       operationId: createUsers
       summary: Create a new user
       tags:
-        - patronus
+        - patronusUserManagement
       requestBody:
         required: true
         content:
@@ -45,14 +45,14 @@ paths:
       operationId: getUsersById
       summary: Get user by ID
       tags:
-        - patronus
+        - patronusUserManagement
       parameters:
         - name: id
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: OK
@@ -64,14 +64,14 @@ paths:
       operationId: updateUserById
       summary: Update user by ID
       tags:
-        - patronus
+        - patronusUserManagement
       parameters:
         - name: id
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       requestBody:
         required: true
         content:
@@ -89,14 +89,14 @@ paths:
       operationId: deleteUserbyId
       summary: Delete user by ID
       tags:
-        - patronus
+        - patronusUserManagement
       parameters:
         - name: id
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: No Content
@@ -105,7 +105,7 @@ paths:
       operationId: getPosts
       summary: Get all posts
       tags:
-        - patronus
+        - patronusPosts
       responses:
         '200':
           description: OK
@@ -119,7 +119,7 @@ paths:
       operationId: CreatePost
       summary: Create a new post
       tags:
-        - patronus
+        - patronusPosts
       requestBody:
         required: true
         content:
@@ -138,14 +138,14 @@ paths:
       operationId: getPostById
       summary: Get post by ID
       tags:
-        - patronus
+        - patronusPosts
       parameters:
         - name: id
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '200':
           description: OK
@@ -157,14 +157,14 @@ paths:
       operationId: updatePostById
       summary: Update post by ID
       tags:
-        - patronus
+        - patronusPosts
       parameters:
         - name: id
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       requestBody:
         required: true
         content:
@@ -182,23 +182,30 @@ paths:
       operationId: deletePostById
       summary: Delete post by ID
       tags:
-        - patronus
+        - patronusPosts
       parameters:
         - name: id
           in: path
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
       responses:
         '204':
           description: No Content
-  /api/comments:
+  /api/posts/{id}/comments:
     post:
       operationId: createComment
       summary: Create a new comment
       tags:
-        - patronus
+        - patronusPosts
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
       requestBody:
         required: true
         content:
@@ -212,12 +219,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CommentResponse'
-  /api/friendships:
+  /api/users/{id}/friendships:
     post:
       operationId: postFriendRequest
       summary: Send a friend request
       tags:
-        - patronus
+        - patronusUserManagement
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
       requestBody:
         required: true
         content:
@@ -235,7 +249,14 @@ paths:
       summary: Update friendship status
       operationId: updateFriendship
       tags:
-        - patronus
+        - patronusUserManagement
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
       requestBody:
         required: true
         content:
@@ -268,8 +289,8 @@ components:
       type: object
       properties:
         id:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         username:
           type: string
         email:
@@ -288,19 +309,19 @@ components:
       type: object
       properties:
         userId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         content:
           type: string
     PostResponse:
       type: object
       properties:
         id:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         userId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         content:
           type: string
         createdAt:
@@ -313,25 +334,25 @@ components:
       type: object
       properties:
         userId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         postId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         content:
           type: string
     CommentResponse:
       type: object
       properties:
         id:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         userId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         postId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         content:
           type: string
         createdAt:
@@ -344,34 +365,34 @@ components:
       type: object
       properties:
         userId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         friendId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
     FriendshipUpdateRequest:
       type: object
       properties:
         userId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         friendId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         status:
           type: string
     FriendshipResponse:
       type: object
       properties:
         id:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         userId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         friendId:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         status:
           type: string
         createdAt:
