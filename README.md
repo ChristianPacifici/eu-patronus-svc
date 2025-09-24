@@ -1,5 +1,7 @@
 # EU Patronus Social Network API
 
+![logo](https://raw.githubusercontent.com/ChristianPacifici/eu-patronus-svc/refs/heads/main/src/main/resources/images/logo.png)
+
 [![Java 21](https://img.shields.io/badge/Java-21-blue.svg)](https://openjdk.org/projects/jdk/21/)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.1.21-purple.svg)](https://kotlinlang.org/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-green.svg)](https://spring.io/projects/spring-boot)
