@@ -1,11 +1,16 @@
 server:
   port: 8080
-
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/eu_patronus_db
     username: postgres
     password: password
+  liquibase:
+    parameters:
+      search-path: classpath:db/migration,file:db/migration
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+  tomcat:
+    use-apr: false
 logging:
   level:
     root: DEBUG

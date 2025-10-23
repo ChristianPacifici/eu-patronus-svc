@@ -10,9 +10,6 @@ import org.springframework.web.servlet.HandlerInterceptor
  * Interceptor responsible for managing the Mapped Diagnostic Context (MDC) in the application.
  * This interceptor adds request and correlation IDs from HTTP headers to the MDC for logging purposes,
  * and clears the MDC after the request is completed.
- *
- * The MDC is used to enrich log messages with contextual information such as request IDs and correlation IDs,
- * which helps in tracing and debugging requests across different services and log entries.
  */
 @Component
 class MdcInterceptor : HandlerInterceptor {

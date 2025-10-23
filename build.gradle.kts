@@ -1,5 +1,3 @@
-
-
 plugins {
     val kotlinVersion = "2.1.21"
     id("org.springframework.boot") version "3.3.4"
@@ -10,6 +8,7 @@ plugins {
     id("com.diffplug.spotless") version "7.2.1"
     kotlin("plugin.spring") version kotlinVersion
     kotlin("jvm") version kotlinVersion
+    kotlin("kapt") version kotlinVersion
 }
 
 group = "tech.pacifici.patronus"
@@ -37,6 +36,9 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
     implementation("com.google.code.gson:gson:2.11.0")
     implementation("io.gsonfire:gson-fire:1.8.5")
+
+    implementation("org.mapstruct:mapstruct:1.6.0")
+    kapt("org.mapstruct:mapstruct-processor:1.6.0")
 
     api("org.jooq:jooq:$jooqVersion")
 
@@ -139,4 +141,13 @@ openApiGenerate {
 tasks.named("compileKotlin") {
     dependsOn(tasks.named("openApiGenerate"))
     dependsOn(tasks.named("jooqCodegen"))
+}
+
+plugins.withId("org.jetbrains.kotlin.kapt") {
+    afterEvaluate {
+        tasks.named("kaptGenerateStubsKotlin") {
+            dependsOn("jooqCodegen")
+            dependsOn("openApiGenerate")
+        }
+    }
 }

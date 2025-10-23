@@ -205,7 +205,7 @@ Run tests with:
    ```bash
    docker run -p 8080:8080 patronus-social-network
    ```
-   alternatevely, you can the docker compose in the repo
+   alternatively, you can the docker compose in the repo
 
     ```shell
     docker-compose up

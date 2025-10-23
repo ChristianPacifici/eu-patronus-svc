@@ -1,3 +1,5 @@
+package tech.pacifici.patronus.repository
+
 import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 import tech.pacifici.patronus.model.tables.Users
@@ -19,6 +21,7 @@ class UserRepository(
     fun save(user: UsersRecord): UsersRecord =
         dsl
             .insertInto(Users.USERS)
+            .set(Users.USERS.ID, user.id)
             .set(Users.USERS.USERNAME, user.username)
             .set(Users.USERS.EMAIL, user.email)
             .set(Users.USERS.PASSWORD, user.password)

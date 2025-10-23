@@ -1,16 +1,16 @@
 package tech.pacifici.patronus.controller
 
-import UserService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RestController
 import tech.pacifici.patronus.api.PatronusUserManagementApi
+import tech.pacifici.patronus.dto.toUserResponse
 import tech.pacifici.patronus.model.FriendshipRequest
 import tech.pacifici.patronus.model.FriendshipResponse
 import tech.pacifici.patronus.model.FriendshipUpdateRequest
 import tech.pacifici.patronus.model.UserRequest
 import tech.pacifici.patronus.model.UserResponse
-import toUserResponse
+import tech.pacifici.patronus.service.UserService
 import java.util.UUID
 
 /**
@@ -20,7 +20,7 @@ import java.util.UUID
  */
 @RestController
 class PatronusUserControllerApi(
-    private val userService: UserService,
+    private val userMngService: UserService,
 ) : PatronusUserManagementApi {
     /**
      * Creates a new user in the Patronus platform.
@@ -36,7 +36,7 @@ class PatronusUserControllerApi(
         xCorrelationId: UUID,
         userRequest: UserRequest,
     ): ResponseEntity<UserResponse> {
-        val userResponse = userService.createUser(userRequest).toUserResponse()
+        val userResponse = userMngService.createUser(userRequest).toUserResponse()
         return ResponseEntity.status(HttpStatus.CREATED).body(userResponse)
     }
 
@@ -54,7 +54,7 @@ class PatronusUserControllerApi(
         xRequestId: UUID,
         xCorrelationId: UUID,
     ): ResponseEntity<Unit> {
-        userService.deleteUser(id)
+        userMngService.deleteUser(id)
         return ResponseEntity.noContent().build()
     }
 

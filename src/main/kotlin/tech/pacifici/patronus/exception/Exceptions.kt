@@ -4,6 +4,10 @@ class ResourceNotFoundException(
     message: String,
 ) : RuntimeException(message)
 
+class NoContentException(
+    message: String,
+) : RuntimeException(message)
+
 class InvalidOperationException(
     message: String,
 ) : RuntimeException(message)

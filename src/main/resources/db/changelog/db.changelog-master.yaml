@@ -1,5 +1,5 @@
 databaseChangeLog:
   - include:
-      file: ../migration/V1__initial_schema.sql
+      file: ../migration/V1__Create_social_network_tables.sql
       relativeToChangelogFile: true
 
